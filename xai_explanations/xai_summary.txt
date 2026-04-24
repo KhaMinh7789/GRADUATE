@@ -1,0 +1,12 @@
+============================================================
+XAI LIME EXPLANATIONS SUMMARY
+============================================================
+
+
+1D Model:
+  Number of samples analyzed: 5
+  Average confidence: 0.4570
+
+2D Model:
+  Number of samples analyzed: 5
+  Average confidence: 0.5537

@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-04-23T18:42:36.794852",
+  "models": {
+    "Wav2Vec 2.0 + DNDF": {
+      "mean_accuracy": 0.7854300581573309,
+      "mean_sensitivity": 0.5338541666666666,
+      "mean_specificity": 0.8627450980392157,
+      "mean_auc_roc": 0.7734557364612512
+    },
+    "AST + DNDF": {
+      "mean_accuracy": 0.7965920379002063,
+      "mean_sensitivity": 0.5024154589371981,
+      "mean_specificity": 0.8332187661110156,
+      "mean_auc_roc": 0.6909631011710408
+    }
+  }
+}
