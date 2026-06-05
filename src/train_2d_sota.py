@@ -35,15 +35,34 @@ def mixup_data(x, y, alpha=0.4, device='cuda'):
     return mixed_x, y_a, y_b, lam
 
 class BinaryFocalLoss(nn.Module):
+    """Focal Loss with per-class alpha weighting (Lin et al., 2017).
+    
+    Formula: FL(p_t) = -alpha_t * (1 - p_t)^gamma * log(p_t)
+    where alpha_t = alpha if y=1 (COVID-19), else (1 - alpha) if y=0 (Healthy)
+    
+    FIXED (v2): Applied alpha per-class, not uniformly.
+    This correctly addresses class imbalance:
+      - Positive class (COVID-19): alpha_t = 0.8 (upweight)
+      - Negative class (Healthy):  alpha_t = 0.2 (downweight)
+    
+    Consistent with: train_1d_sota.py BinaryFocalLoss implementation.
+    Hyperparameters: alpha=0.8, gamma=2.0 (unified throughout thesis)
+    """
     def __init__(self, alpha=0.8, gamma=2.0):
         super(BinaryFocalLoss, self).__init__()
-        self.alpha = alpha 
-        self.gamma = gamma
+        self.alpha = alpha  # alpha=0.8: positive class weight
+        self.gamma = gamma  # gamma=2.0: standard focusing parameter (Lin et al., 2017)
 
     def forward(self, inputs, targets):
+        # BCE loss (reduction=none for per-sample weighting)
         bce_loss = F.binary_cross_entropy(inputs, targets, reduction='none')
+        # Probability of correct prediction
         pt = torch.exp(-bce_loss)
-        focal_loss = self.alpha * (1 - pt) ** self.gamma * bce_loss
+        # FIXED: Per-class alpha weighting
+        # alpha_t = alpha if target=1 (COVID), else (1-alpha) if target=0 (Healthy)
+        alpha_t = targets * self.alpha + (1 - targets) * (1 - self.alpha)
+        # Focal loss: alpha_t * (1 - p_t)^gamma * BCE
+        focal_loss = alpha_t * (1 - pt) ** self.gamma * bce_loss
         return focal_loss.mean()
 
 def mixup_criterion(criterion, pred, y_a, y_b, lam):

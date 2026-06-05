@@ -1,7 +1,7 @@
 # Data files
 data/
-*.csv
-*.json
+# *.csv
+# *.json
 
 # Python cache
 __pycache__/
@@ -22,3 +22,10 @@ ENV/
 # OS
 .DS_Store
 Thumbs.db
+data/
+*.wav
+*.mp4
+*.h5
+*.pth
+*.zip
+

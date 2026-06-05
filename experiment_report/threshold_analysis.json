@@ -1,0 +1,218 @@
+{
+  "Wav2Vec 2.0 + DNDF": {
+    "prevalence": 0.23507805325987144,
+    "auc_roc": 0.7734557364612512,
+    "auc_pr_estimated": 0.5245025059421854,
+    "youden_optimal": {
+      "sensitivity": 0.671875,
+      "specificity": 0.7691076430572229,
+      "youden_j": 0.4409826430572229
+    },
+    "sweep": [
+      {
+        "model": "Wav2Vec 2.0 + DNDF",
+        "sensitivity": 0.4948,
+        "specificity": 0.878,
+        "fpr": 0.122,
+        "youden_j": 0.3727,
+        "note": ""
+      },
+      {
+        "model": "Wav2Vec 2.0 + DNDF",
+        "sensitivity": 0.5495,
+        "specificity": 0.8551,
+        "fpr": 0.1449,
+        "youden_j": 0.4046,
+        "note": "<-- tau=0.50 (default)"
+      },
+      {
+        "model": "Wav2Vec 2.0 + DNDF",
+        "sensitivity": 0.6003,
+        "specificity": 0.8223,
+        "fpr": 0.1777,
+        "youden_j": 0.4226,
+        "note": ""
+      },
+      {
+        "model": "Wav2Vec 2.0 + DNDF",
+        "sensitivity": 0.6497,
+        "specificity": 0.7835,
+        "fpr": 0.2165,
+        "youden_j": 0.4333,
+        "note": ""
+      },
+      {
+        "model": "Wav2Vec 2.0 + DNDF",
+        "sensitivity": 0.6693,
+        "specificity": 0.7695,
+        "fpr": 0.2305,
+        "youden_j": 0.4388,
+        "note": "<-- Youden-optimal"
+      },
+      {
+        "model": "Wav2Vec 2.0 + DNDF",
+        "sensitivity": 0.7005,
+        "specificity": 0.7279,
+        "fpr": 0.2721,
+        "youden_j": 0.4284,
+        "note": ""
+      },
+      {
+        "model": "Wav2Vec 2.0 + DNDF",
+        "sensitivity": 0.7201,
+        "specificity": 0.7159,
+        "fpr": 0.2841,
+        "youden_j": 0.4359,
+        "note": "<-- tau=0.35 (current)"
+      },
+      {
+        "model": "Wav2Vec 2.0 + DNDF",
+        "sensitivity": 0.7487,
+        "specificity": 0.6743,
+        "fpr": 0.3257,
+        "youden_j": 0.423,
+        "note": ""
+      },
+      {
+        "model": "Wav2Vec 2.0 + DNDF",
+        "sensitivity": 0.7995,
+        "specificity": 0.5994,
+        "fpr": 0.4006,
+        "youden_j": 0.3989,
+        "note": ""
+      },
+      {
+        "model": "Wav2Vec 2.0 + DNDF",
+        "sensitivity": 0.8503,
+        "specificity": 0.4902,
+        "fpr": 0.5098,
+        "youden_j": 0.3405,
+        "note": ""
+      },
+      {
+        "model": "Wav2Vec 2.0 + DNDF",
+        "sensitivity": 0.8997,
+        "specificity": 0.3573,
+        "fpr": 0.6427,
+        "youden_j": 0.2571,
+        "note": ""
+      },
+      {
+        "model": "Wav2Vec 2.0 + DNDF",
+        "sensitivity": 0.9505,
+        "specificity": 0.2033,
+        "fpr": 0.7967,
+        "youden_j": 0.1538,
+        "note": ""
+      }
+    ]
+  },
+  "AST + DNDF": {
+    "prevalence": 0.11072056239015818,
+    "auc_roc": 0.6909631011710408,
+    "auc_pr_estimated": 0.3066854363680156,
+    "youden_optimal": {
+      "sensitivity": 0.45686680469289165,
+      "specificity": 0.8809073724007561,
+      "youden_j": 0.33777417709364776
+    },
+    "sweep": [
+      {
+        "model": "AST + DNDF",
+        "sensitivity": 0.5003,
+        "specificity": 0.8338,
+        "fpr": 0.1662,
+        "youden_j": 0.3342,
+        "note": ""
+      },
+      {
+        "model": "AST + DNDF",
+        "sensitivity": 0.55,
+        "specificity": 0.7432,
+        "fpr": 0.2568,
+        "youden_j": 0.2932,
+        "note": "<-- tau=0.50 (default)"
+      },
+      {
+        "model": "AST + DNDF",
+        "sensitivity": 0.5873,
+        "specificity": 0.6867,
+        "fpr": 0.3133,
+        "youden_j": 0.274,
+        "note": ""
+      },
+      {
+        "model": "AST + DNDF",
+        "sensitivity": 0.5873,
+        "specificity": 0.6867,
+        "fpr": 0.3133,
+        "youden_j": 0.274,
+        "note": ""
+      },
+      {
+        "model": "AST + DNDF",
+        "sensitivity": 0.5873,
+        "specificity": 0.6867,
+        "fpr": 0.3133,
+        "youden_j": 0.274,
+        "note": ""
+      },
+      {
+        "model": "AST + DNDF",
+        "sensitivity": 0.5873,
+        "specificity": 0.6867,
+        "fpr": 0.3133,
+        "youden_j": 0.274,
+        "note": ""
+      },
+      {
+        "model": "AST + DNDF",
+        "sensitivity": 0.8399,
+        "specificity": 0.2929,
+        "fpr": 0.7071,
+        "youden_j": 0.1328,
+        "note": ""
+      },
+      {
+        "model": "AST + DNDF",
+        "sensitivity": 0.8399,
+        "specificity": 0.2929,
+        "fpr": 0.7071,
+        "youden_j": 0.1328,
+        "note": ""
+      },
+      {
+        "model": "AST + DNDF",
+        "sensitivity": 0.8399,
+        "specificity": 0.2929,
+        "fpr": 0.7071,
+        "youden_j": 0.1328,
+        "note": ""
+      },
+      {
+        "model": "AST + DNDF",
+        "sensitivity": 0.8502,
+        "specificity": 0.2727,
+        "fpr": 0.7273,
+        "youden_j": 0.123,
+        "note": ""
+      },
+      {
+        "model": "AST + DNDF",
+        "sensitivity": 0.8999,
+        "specificity": 0.2074,
+        "fpr": 0.7926,
+        "youden_j": 0.1074,
+        "note": ""
+      },
+      {
+        "model": "AST + DNDF",
+        "sensitivity": 0.9503,
+        "specificity": 0.1121,
+        "fpr": 0.8879,
+        "youden_j": 0.0624,
+        "note": ""
+      }
+    ]
+  }
+}

@@ -227,7 +227,54 @@ class InterpretabilityAnalysis:
         
         return wav2vec_model, ast_model
     
-    def analyze_predictions(self, num_samples: int = 5):
+    def ablation_on_frequency_bins(self, feature: torch.Tensor, model: torch.nn.Module, 
+                                   label: int, band_start_khz: float = 2.0, band_end_khz: float = 6.0, 
+                                   sample_rate: int = 16000, n_mels: int = 128) -> Dict:
+        """
+        Thực hiện Ablation trên 2D Spectrogram: Triệt tiêu một dải tần số để kiểm chứng tác động.
+        Phản hồi từ hội đồng: Xác nhận Feature từ XAI có thực sự quan trọng hay không.
+        """
+        model.eval()
+        
+        with torch.no_grad():
+            # Original Prediction
+            feature_tensor = feature.unsqueeze(0).to(self.device)
+            if len(feature_tensor.shape) == 4:
+                feature_tensor = feature_tensor.squeeze(1).transpose(1, 2)
+            orig_prob = model(feature_tensor).item()
+            
+            # Map kHz to Mel bins (approximate mapping)
+            # Mel scale formula: m = 2595 * log10(1 + f/700)
+            def freq_to_mel(f): return 2595 * np.log10(1 + f/700)
+            
+            max_mel = freq_to_mel(sample_rate / 2)
+            min_mel = freq_to_mel(0)
+            
+            start_mel = freq_to_mel(band_start_khz * 1000)
+            end_mel = freq_to_mel(band_end_khz * 1000)
+            
+            # Find indices
+            bin_start = int((start_mel / max_mel) * n_mels)
+            bin_end = int((end_mel / max_mel) * n_mels)
+            
+            # Apply Ablation (Zero out the frequency band)
+            ablated_feature = feature.clone()
+            # AST input shape before squeeze is [1, 128, 1024]. freq is dim 1
+            ablated_feature[0, bin_start:bin_end, :] = 0.0
+            
+            ablated_tensor = ablated_feature.unsqueeze(0).to(self.device)
+            if len(ablated_tensor.shape) == 4:
+                ablated_tensor = ablated_tensor.squeeze(1).transpose(1, 2)
+            
+            ablated_prob = model(ablated_tensor).item()
+            
+        return {
+            'band': f"{band_start_khz}-{band_end_khz} kHz",
+            'original_prob': orig_prob,
+            'ablated_prob': ablated_prob,
+            'prob_drop': orig_prob - ablated_prob,
+            'label': label
+        }
         """Analyze interpretability cho một số samples"""
         
         wav2vec_model, ast_model = self.load_models(self.base_dir)
@@ -284,6 +331,14 @@ class InterpretabilityAnalysis:
             save_path_2d = os.path.join(output_dir,
                                        f'sample_{idx}_ast_explanation.png')
             lime_2d.visualize_explanation(exp_2d, save_path_2d)
+            
+            print(f"   🔍 Frequency Ablation (2-6 kHz) on AST...")
+            ablation_res = self.ablation_on_frequency_bins(feature_2d, ast_model, int(label))
+            print(f"      Original Prob: {ablation_res['original_prob']:.4f}")
+            print(f"      Ablated Prob:  {ablation_res['ablated_prob']:.4f}")
+            print(f"      Prob Drop:     {ablation_res['prob_drop']:.4f}")
+            
+            exp_2d['ablation'] = ablation_res
             
             print(f"   True Label: {label_names[int(label)]}")
             print(f"   Wav2Vec Prediction: {exp_1d['predicted_label']} "

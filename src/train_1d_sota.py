@@ -24,15 +24,34 @@ EPOCHS = 15
 N_SPLITS = 5
 
 class BinaryFocalLoss(nn.Module):
+    """Focal Loss with per-class alpha weighting (Lin et al., 2017)
+    
+    Formula: FL(p_t) = -α_t(1-p_t)^γ * log(p_t)
+    where α_t = α if y=1 else (1-α)
+    
+    Args:
+        alpha: Weight for positive class (COVID-19). Negative class gets (1-alpha)
+        gamma: Focusing parameter (higher = more focus on hard examples)
+    """
     def __init__(self, alpha=0.8, gamma=2.0):
         super(BinaryFocalLoss, self).__init__()
         self.alpha = alpha 
         self.gamma = gamma
 
     def forward(self, inputs, targets):
+        # BCE loss (reduction=none for per-sample loss)
         bce_loss = F.binary_cross_entropy(inputs, targets, reduction='none')
+        
+        # Probability of correct class
         pt = torch.exp(-bce_loss)
-        focal_loss = self.alpha * (1 - pt) ** self.gamma * bce_loss
+        
+        # FIXED: Apply alpha per-class (not uniform)
+        # α_t = α if target=1, else (1-α)
+        alpha_t = targets * self.alpha + (1 - targets) * (1 - self.alpha)
+        
+        # Focal loss: α_t * (1 - p_t)^γ * BCE
+        focal_loss = alpha_t * (1 - pt) ** self.gamma * bce_loss
+        
         return focal_loss.mean()
 
 def evaluate(model, loader, criterion, device):
