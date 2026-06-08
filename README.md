@@ -2,6 +2,7 @@
 ## COVID-19 Cough Detection — KhaTM_24MSE43024
 
 > **Thesis**: *"COVID-19 Detection from Cough Sounds Using Hybrid Deep Learning with Wav2Vec 2.0, AST, and Deep Neural Decision Forest (DNDF)"*
+
 > **Data**: *"Liên hệ với tác giả để được cung cấp"*
 
 ---
