@@ -83,7 +83,7 @@ Covid_Cough_Research/
 ├── best_1d_model.pth                     # Model 1D tốt nhất
 ├── best_2d_model.pth                     # Model 2D tốt nhất
 │
-└── SOURCE_CODE_GUIDE.md              # 📖 File này
+└── README.md              # 📖 File này
 ```
 
 ---
